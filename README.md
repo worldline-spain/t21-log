@@ -4,7 +4,25 @@ Commons classes added to this library:
 * T21Log
 
 ## How to add to your project
-Pending
+- Maven
+```xml
+<dependency>
+   <groupId>com.tempos21.android.commons.utils</groupId>
+   <artifactId>t21-log</artifactId>
+   <version>1.0.7</version>
+   <type>pom</type>
+ </dependency>
+```
+- Gradle
+```xml
+compile 'com.tempos21.android.commons.utils:t21-log:1.0.7'
+```
+- Ivy
+```xml
+<dependency org='com.tempos21.android.commons.utils' name='t21-log' rev='1.0.7'>
+  <artifact name='t21-log' ext='pom' ></artifact>
+</dependency>
+```
 
 ## How to use
 
