@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: "com.jfrog.bintray"
+apply plugin: 'com.novoda.bintray-release' // must be applied after your artifact generating plugin (eg. java / com.android.library)
 
 version = "1.0.7"
 def siteUrl = 'https://github.com/worldline-spain/t21-log'      // Homepage URL of the library
@@ -8,6 +8,7 @@ def gitUrl = 'https://github.com/worldline-spain/t21-log.git'   // Git repositor
 group = "com.tempos21.android.commons.utils"
 
 def cfg = rootProject.ext.configuration;
+def ext = rootProject.ext;
 
 android {
     compileSdkVersion cfg.compileVersion
@@ -40,21 +41,13 @@ android {
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-// https://github.com/bintray/gradle-bintray-plugin
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "t21-log"
-        userOrg = properties.getProperty("bintray.userOrg")
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
+publish {
+    userOrg = properties.getProperty("bintray.userOrg")
+    groupId = ext.PUBLISH_GROUP_ID
+    artifactId = ext.PUBLISH_ARTIFACT_ID
+    publishVersion = ext.PUBLISH_VERSION
+    desc = 'Android library to help you to print logs and disable them in release'
+    website = siteUrl
 }
 
 install {
