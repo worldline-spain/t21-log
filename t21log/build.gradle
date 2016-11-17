@@ -1,14 +1,22 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release' // must be applied after your artifact generating plugin (eg. java / com.android.library)
+
+version = "1.0.7"
+def siteUrl = 'https://github.com/worldline-spain/t21-log'      // Homepage URL of the library
+def gitUrl = 'https://github.com/worldline-spain/t21-log.git'   // Git repository URL
+group = "com.tempos21.android.commons.utils"
+
+def cfg = rootProject.ext.configuration;
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion cfg.compileVersion
+    buildToolsVersion cfg.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion cfg.minSdk
+        targetSdkVersion cfg.targetSdk
+        versionCode cfg.version_code
+        versionName cfg.version_name
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -28,6 +36,15 @@ android {
     }
 }
 
+publish {
+    userOrg = 'worldline-spain'
+    groupId = 'com.tempos21.android.commons.utils'
+    artifactId = 't21-log'
+    publishVersion = '1.0.7'
+    desc = 'Android String crypter. Used for encryption of tokens'
+    website = 'https://github.com/worldline-spain/t21-crypter-android'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -35,4 +52,17 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+task findConventions << {
+    println project.getConvention()
 }
