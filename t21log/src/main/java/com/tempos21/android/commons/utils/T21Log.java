@@ -5,10 +5,11 @@ package com.tempos21.android.commons.utils;
  */
 public class T21Log {
 
-    private static boolean LOG_ENABLED = BuildConfig.LOG_ENABLED;
-    private static String logTag = null;
-
     private static final String BLANK = " ";
+
+    private static boolean LOG_ENABLED = BuildConfig.LOG_ENABLED;
+
+    private static String logTag = null;
 
     public static String getLogTag() {
         if (logTag == null) {
@@ -17,12 +18,17 @@ public class T21Log {
         return logTag;
     }
 
-    public static void initialize(String tag, boolean enabled){
+    /**
+     * Initialize the Log
+     * @param tag:     Your appName or something You want to appear in log;
+     * @param enabled: If you want to enable or disable the log
+     */
+    public static void initialize(String tag, boolean enabled) {
         T21Log.logTag = tag;
         T21Log.LOG_ENABLED = enabled;
     }
 
-    private static String getString(Object object){
+    private static String getString(Object object) {
         String string = null;
         try {
             string = String.valueOf(object);
@@ -71,7 +77,7 @@ public class T21Log {
     private static String getLog(Object... objects) {
         StringBuilder sb = new StringBuilder();
         boolean space = false;
-        for (Object object : objects){
+        for (Object object : objects) {
             if (space) {
                 sb.append(BLANK);
             }
