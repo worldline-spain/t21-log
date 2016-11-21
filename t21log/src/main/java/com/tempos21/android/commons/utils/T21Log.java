@@ -17,13 +17,9 @@ public class T21Log {
         return logTag;
     }
 
-    public static void setLogEnabled(boolean enabled){
-        LOG_ENABLED = enabled;
-    }
-
-    public static void setLogTag(String logTag) {
-
-        T21Log.logTag = logTag;
+    public static void initialize(String tag, boolean enabled){
+        T21Log.logTag = tag;
+        T21Log.LOG_ENABLED = enabled;
     }
 
     private static String getString(Object object){
