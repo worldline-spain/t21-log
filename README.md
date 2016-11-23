@@ -1,5 +1,8 @@
 # T21Log
 
+[![Bintray](https://img.shields.io/bintray/v/worldline-spain/maven/t21-log.svg?maxAge=2592000)](https://bintray.com/worldline-spain/maven/t21-log)
+
+
 Commons classes added to this library:
 * T21Log
 
