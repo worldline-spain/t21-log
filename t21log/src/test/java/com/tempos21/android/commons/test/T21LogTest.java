@@ -1,4 +1,4 @@
-package com.tempos21.android.commons;
+package com.tempos21.android.commons.test;
 
 import org.junit.Test;
 

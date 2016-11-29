@@ -11,12 +11,6 @@ public class SampleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        initLog();
-    }
-
-    private void initLog() {
-        T21Log.setLogEnabled(BuildConfig.DEBUG);
-        T21Log.setLogTag(LOG_TAG);
+        T21Log.initialize(LOG_TAG, BuildConfig.DEBUG);
     }
 }

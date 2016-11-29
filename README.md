@@ -31,12 +31,11 @@ compile 'com.tempos21.android.commons.utils:t21-log:1.0.7'
 
 ### Setting up
 
-In your application class or your launcher activity (or main/base activity) you should call these methods:
+In your application class or your launcher activity (or main/base activity) you should call this method:
 
-* T21Log.setLogTag(String) to set the tag of your application. This tag will be in the whole app.
-
-* T21Log.setLogEnabled(boolean) to set enabled or disabled the log. If you don't call this method then nothing will be printed. Is a good practice call like this 'T21Log
-    .setLogEnabled(BuildConfig.DEBUG);', in order to avoid print log messages in release versions.
+* `T21Log.initialize(String, String);`
+	* First is the tag of your application. This tag will be in the whole app.
+	* Second is to set enabled or disabled the log. If you don't call this method then nothing will be printed. Is a good practice call like this `T21Log.initialize("AppName", BuildConfig.DEBUG);`, in order to avoid print log messages in release versions.
     
 ### Printing logs
 
@@ -60,4 +59,3 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 
 http://www.apache.org/licenses/LICENSE-2.0
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
