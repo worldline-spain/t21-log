@@ -6,23 +6,27 @@
 Commons classes added to this library:
 * T21Log
 
+## Why
+- Enable or disable the logcat depending on the BuildConfig.
+- Strings are not concatenated with the operator '+', we use `StringBuilder` class
+
 ## How to add to your project
 - Maven
 ```xml
 <dependency>
    <groupId>com.tempos21.android.commons.utils</groupId>
    <artifactId>t21-log</artifactId>
-   <version>1.0.7</version>
+   <version>1.0.8</version>
    <type>pom</type>
  </dependency>
 ```
 - Gradle
 ```xml
-compile 'com.tempos21.android.commons.utils:t21-log:1.0.7'
+compile 'com.tempos21.android.commons.utils:t21-log:1.0.8'
 ```
 - Ivy
 ```xml
-<dependency org='com.tempos21.android.commons.utils' name='t21-log' rev='1.0.7'>
+<dependency org='com.tempos21.android.commons.utils' name='t21-log' rev='1.0.8'>
   <artifact name='t21-log' ext='pom' ></artifact>
 </dependency>
 ```

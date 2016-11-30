@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.novoda.bintray-release' // must be applied after your artifact generating plugin (eg. java / com.android.library)
 
-version = "1.0.7"
+version = "1.0.8"
 def siteUrl = 'https://github.com/worldline-spain/t21-log'      // Homepage URL of the library
 def gitUrl = 'https://github.com/worldline-spain/t21-log.git'   // Git repository URL
 group = "com.tempos21.android.commons.utils"
