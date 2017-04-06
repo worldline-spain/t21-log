@@ -3,9 +3,11 @@ package com.tempos21.android.commons.test;
 import com.tempos21.android.commons.utils.FileLogger;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -32,8 +34,13 @@ public class FileLoggerTest {
 
     @BeforeClass
     public static void setUpOnce() {
-        logFile = new File(/*System.getProperty("user.home"), */"FileLoggerTest.log");
+        logFile = new File("FileLoggerTest.log");
         FileLogger.initialize(logFile);
+    }
+
+    @Before
+    public void setUp() {
+        PowerMockito.mockStatic(Log.class);
     }
 
     @Test
