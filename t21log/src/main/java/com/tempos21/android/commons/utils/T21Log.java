@@ -22,16 +22,19 @@ public class T21Log {
 
     /**
      * Initialize the Log
+     *
      * @param tag:     Your appName or something You want to appear in log;
      * @param enabled: If you want to enable or disable the log
      */
     public static void initialize(String tag, boolean enabled) {
         T21Log.logTag = tag;
         T21Log.LOG_ENABLED = enabled;
+        FileLogger.initialize(null);
     }
 
     /**
      * Initialize the Log to write both to Android logger and file
+     *
      * @param tag:     Your appName or something You want to appear in log;
      * @param enabled: If you want to enable or disable the log
      * @param logFile: File where log will be written to
