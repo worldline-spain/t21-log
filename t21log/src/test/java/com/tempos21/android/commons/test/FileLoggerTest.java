@@ -77,7 +77,7 @@ public class FileLoggerTest {
         buildingTest.setId(3);
         buildingTest.setName("nameTestInfo");
         buildingTest.setAddress("addressTestInfo");
-        FileLogger.d(TAG, buildingTest.toString());
+        FileLogger.i(TAG, buildingTest.toString());
 
         checkLogFile(INFO_TAG, buildingTest);
     }
@@ -90,7 +90,7 @@ public class FileLoggerTest {
         buildingTest.setId(12);
         buildingTest.setName("nameTestWarning");
         buildingTest.setAddress("addressTestWarning");
-        FileLogger.d(TAG, buildingTest.toString());
+        FileLogger.w(TAG, buildingTest.toString());
 
         checkLogFile(WARNING_TAG, buildingTest);
     }
@@ -103,7 +103,7 @@ public class FileLoggerTest {
         buildingTest.setId(99);
         buildingTest.setName("nameTestError");
         buildingTest.setAddress("addressTestError");
-        FileLogger.d(TAG, buildingTest.toString());
+        FileLogger.e(TAG, buildingTest.toString());
 
         checkLogFile(ERROR_TAG, buildingTest);
     }
@@ -111,10 +111,14 @@ public class FileLoggerTest {
     private static void checkLogFile(String logLevelTag, BuildingTest buildingTest) {
         String lineLogged = readFileLastLine();
 
-        assertTrue("Verbose tag '" + logLevelTag + "' not found in log file", lineLogged.contains(logLevelTag));
+        int indexOfTag = lineLogged.indexOf(TAG);
+        int logLevelIndex = indexOfTag - 2;
+
+        assertTrue("Verbose tag '" + logLevelTag + "' not found in log file",
+                lineLogged.substring(logLevelIndex, indexOfTag - 1).equals(logLevelTag));
         assertTrue("Log tag '" + TAG + "' not found in log file", lineLogged.contains(TAG));
 
-        String dateTimeString = lineLogged.substring(0, lineLogged.indexOf(TAG) - 2);
+        String dateTimeString = lineLogged.substring(0, logLevelIndex);
         DateFormat formatter = SimpleDateFormat.getDateTimeInstance();
         try {
             formatter.parse(dateTimeString);
