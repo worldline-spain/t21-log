@@ -1,5 +1,6 @@
 package com.tempos21.android.commons.test;
 
+import com.tempos21.android.commons.utils.FileLogger;
 import com.tempos21.android.commons.utils.T21Log;
 
 import org.junit.Before;
@@ -11,8 +12,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import android.util.Log;
 
+import java.io.File;
+
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
@@ -96,6 +100,64 @@ public class T21LogTest {
 
         verifyStatic(times(1));
         Log.e(eq(TAG), anyString());
+    }
+
+    @Test
+    public void disabledLog() {
+
+        T21Log.initialize(TAG, false);
+
+        int i = -1;
+        BuildingTest buildingTest = new BuildingTest();
+        buildingTest.setId(44);
+        buildingTest.setName("nameTestDisabled");
+        buildingTest.setAddress("addressTestDisabled");
+
+        T21Log.v("hola: ", i, " :: ", buildingTest);
+
+        verifyStatic(never());
+        Log.v(eq(TAG), anyString());
+    }
+
+    @Test
+    public void writeToFile() {
+
+        File file = new File("T21LogTest_writeToFile.log");
+
+        T21Log.initialize(TAG, true, file);
+
+        int i = 34;
+        BuildingTest buildingTest = new BuildingTest();
+        buildingTest.setId(28);
+        buildingTest.setName("nameTestFile");
+        buildingTest.setAddress("addressTestFile");
+
+        T21Log.i("hola: ", i, " :: ", buildingTest);
+
+        verifyStatic(times(1));
+        FileLogger.i(eq(TAG), anyString());
+
+        file.delete();
+    }
+
+    @Test
+    public void disabledLogWithFile() {
+        File file = new File("T21LogTest_disabledLogWithFile.log");
+
+        T21Log.initialize(TAG, false, file);
+
+        int i = 87;
+        BuildingTest buildingTest = new BuildingTest();
+        buildingTest.setId(3698);
+        buildingTest.setName("nameTestDisabledWithFile");
+        buildingTest.setAddress("addressTestDisabledWithFile");
+
+        T21Log.v("hola: ", i, " :: ", buildingTest);
+
+        verifyStatic(never());
+        FileLogger.v(eq(TAG), anyString());
+
+        file.delete();
     }
 
     class BuildingTest {
