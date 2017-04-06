@@ -1,44 +1,31 @@
 package com.tempos21.android.commons.test;
 
-import org.junit.Test;
+import com.tempos21.android.commons.utils.T21Log;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import android.util.Log;
+
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Log.class})
 public class T21LogTest {
 
-    private static String getString(Object object) {
-        String string = null;
-        try {
-            string = String.valueOf(object);
-        } catch (Exception e) {
-            try {
-                string = object.toString();
-            } catch (Exception e1) {
-                System.out.println(e1.getMessage());
-            }
-            System.out.println(e.getMessage());
-        }
-        return string;
-    }
+    private static String TAG = "[T21LogTest]";
 
-    private static void v(Object... verbose) {
-        if (true) {
-            StringBuilder sb = new StringBuilder();
-            for (Object object : verbose) {
-                sb.append(getString(object));
-            }
-            //            android.util.Log.v(getLogTag(), sb.toString());
-            System.out.println(sb.toString());
-        }
-    }
-
-    private static void d(Object... verbose) {
-        if (true) {
-            StringBuilder sb = new StringBuilder();
-            for (Object object : verbose) {
-                sb.append(getString(object));
-            }
-            //            android.util.Log.v(getLogTag(), sb.toString());
-            System.out.println(sb.toString());
-        }
+    @Before
+    public void setUp() {
+        PowerMockito.mockStatic(Log.class);
+        T21Log.initialize(TAG, true);
     }
 
     @Test
@@ -48,17 +35,67 @@ public class T21LogTest {
         buildingTest.setId(2);
         buildingTest.setName("nameTest");
         buildingTest.setAddress("addressTest");
-        v("hola: ", i, " :: ", buildingTest);
+
+        T21Log.v("hola: ", i, " :: ", buildingTest);
+
+        verifyStatic(times(1));
+        Log.v(eq(TAG), anyString());
     }
 
     @Test
     public void debug() {
-        int i = 0;
+        int i = 56;
         BuildingTest buildingTest = new BuildingTest();
         buildingTest.setId(2);
         buildingTest.setName("nameTest");
         buildingTest.setAddress("addressTest");
-        d("hola: ", i, " :: ", buildingTest);
+
+        T21Log.d("hola: ", i, " :: ", buildingTest);
+
+        verifyStatic(times(1));
+        Log.d(eq(TAG), anyString());
+    }
+
+    @Test
+    public void info() {
+        int i = 787;
+        BuildingTest buildingTest = new BuildingTest();
+        buildingTest.setId(3);
+        buildingTest.setName("nameTestInfo");
+        buildingTest.setAddress("addressTestInfo");
+
+        T21Log.i("hola: ", i, " :: ", buildingTest);
+
+        verifyStatic(times(1));
+        Log.i(eq(TAG), anyString());
+    }
+
+    @Test
+    public void warning() {
+        int i = 1;
+        BuildingTest buildingTest = new BuildingTest();
+        buildingTest.setId(12);
+        buildingTest.setName("nameTestWarning");
+        buildingTest.setAddress("addressTestWarning");
+
+        T21Log.w("hola: ", i, " :: ", buildingTest);
+
+        verifyStatic(times(1));
+        Log.w(eq(TAG), anyString());
+    }
+
+    @Test
+    public void error() {
+        int i = -56;
+        BuildingTest buildingTest = new BuildingTest();
+        buildingTest.setId(99);
+        buildingTest.setName("nameTestError");
+        buildingTest.setAddress("addressTestError");
+
+        T21Log.e("hola: ", i, " :: ", buildingTest);
+
+        verifyStatic(times(1));
+        Log.e(eq(TAG), anyString());
     }
 
     class BuildingTest {
