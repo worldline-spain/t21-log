@@ -1,7 +1,4 @@
-package com.tempos21.android.commons.test;
-
-import com.tempos21.android.commons.utils.FileLogger;
-import com.tempos21.android.commons.utils.T21Log;
+package com.tempos21.android.commons.utils;
 
 import org.junit.Before;
 import org.junit.Test;

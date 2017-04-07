@@ -11,7 +11,7 @@ import java.util.Calendar;
 /**
  * Class that writes log messages to a file.
  */
-public class FileLogger {
+class FileLogger {
 
     private static final String SLASH = "/";
 

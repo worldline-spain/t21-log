@@ -1,6 +1,4 @@
-package com.tempos21.android.commons.test;
-
-import com.tempos21.android.commons.utils.FileLogger;
+package com.tempos21.android.commons.utils;
 
 import org.junit.AfterClass;
 import org.junit.Before;
