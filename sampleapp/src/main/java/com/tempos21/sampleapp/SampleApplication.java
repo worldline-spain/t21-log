@@ -10,6 +10,8 @@ public class SampleApplication extends Application {
 
     private static final String LOG_TAG = "[SAMPLE_APP]";
 
+    private static final String LOG_PATH = "logs";
+
     private static final String LOG_FILE_NAME = "SampleApp.log";
 
     private File logFile;
@@ -17,7 +19,9 @@ public class SampleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        logFile = new File(getFilesDir(), LOG_FILE_NAME);
+        File logsPath = new File(getFilesDir(), LOG_PATH);
+        logsPath.mkdir();
+        logFile = new File(logsPath, LOG_FILE_NAME);
         T21Log.initialize(LOG_TAG, BuildConfig.DEBUG, logFile);
     }
 
