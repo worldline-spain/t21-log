@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -27,6 +28,8 @@ import static org.junit.Assert.fail;
 public class FileLoggerTest {
 
     private static File logFile;
+
+    private static final String DATE_TIME_FORMAT = "yyyy/MM/dd HH:mm:ss.SSS";
 
     private static String TAG = "[FileLoggerTest]";
 
@@ -117,7 +120,7 @@ public class FileLoggerTest {
         assertTrue("Log tag '" + TAG + "' not found in log file", lineLogged.contains(TAG));
 
         String dateTimeString = lineLogged.substring(0, logLevelIndex);
-        DateFormat formatter = SimpleDateFormat.getDateTimeInstance();
+        DateFormat formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
         try {
             formatter.parse(dateTimeString);
         } catch (ParseException e) {

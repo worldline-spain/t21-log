@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Class that writes log messages to a file.
@@ -18,6 +19,8 @@ class FileLogger {
     private static final String COLON = ":";
 
     private static final String BLANK = " ";
+
+    private static final String DATE_TIME_FORMAT = "yyyy/MM/dd HH:mm:ss.SSS";
 
     private static File file;
 
@@ -41,7 +44,7 @@ class FileLogger {
                 //2017/04/02 19:44:55 V/FileLoggerTag: message logged
                 StringBuilder sb = new StringBuilder();
                 Calendar now = Calendar.getInstance();
-                DateFormat formatter = SimpleDateFormat.getDateTimeInstance();
+                DateFormat formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
                 sb.append(formatter.format(now.getTime()));
                 sb.append(BLANK);
                 sb.append(logLevel);
