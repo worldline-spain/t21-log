@@ -15,13 +15,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Log.class})
@@ -30,6 +26,8 @@ public class FileLoggerTest {
     private static File logFile;
 
     private static final String DATE_TIME_FORMAT = "yyyy/MM/dd HH:mm:ss.SSS";
+
+    private static final String DATE_TIME_REGEX = "\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}";
 
     private static String TAG = "[FileLoggerTest]";
 
@@ -47,53 +45,65 @@ public class FileLoggerTest {
     @Test
     public void verbose() {
         String VERBOSE_TAG = "V";
-
         BuildingTest buildingTest = new BuildingTest();
         buildingTest.setId(2);
         buildingTest.setName("nameTestVerbose");
         buildingTest.setAddress("addressTestVerbose");
+
         FileLogger.v(TAG, buildingTest.toString());
 
-        checkLogFile(VERBOSE_TAG, buildingTest);
+        assertTrue("Log tag '" + TAG + "' not found in log file", readFileLastLine().contains(TAG));
+        assertEquals("Verbose tag '" + VERBOSE_TAG + "' not found in log file", VERBOSE_TAG, getLogLevelTag());
+        assertTrue("Date and time not found in log file", getTimestamp().matches(DATE_TIME_REGEX));
+        assertEquals("Object logged '" + buildingTest + "' not found in log file", buildingTest.toString(), getMessage());
     }
 
     @Test
     public void debug() {
         String DEBUG_TAG = "D";
-
         BuildingTest buildingTest = new BuildingTest();
         buildingTest.setId(0);
         buildingTest.setName("nameTestDebug");
         buildingTest.setAddress("addressTestDebug");
+
         FileLogger.d(TAG, buildingTest.toString());
 
-        checkLogFile(DEBUG_TAG, buildingTest);
+        assertTrue("Log tag '" + TAG + "' not found in log file", readFileLastLine().contains(TAG));
+        assertEquals("Debug tag '" + DEBUG_TAG + "' not found in log file", DEBUG_TAG, getLogLevelTag());
+        assertTrue("Date and time not found in log file", getTimestamp().matches(DATE_TIME_REGEX));
+        assertEquals("Object logged '" + buildingTest + "' not found in log file", buildingTest.toString(), getMessage());
     }
 
     @Test
     public void info() {
         String INFO_TAG = "I";
-
         BuildingTest buildingTest = new BuildingTest();
         buildingTest.setId(3);
         buildingTest.setName("nameTestInfo");
         buildingTest.setAddress("addressTestInfo");
+
         FileLogger.i(TAG, buildingTest.toString());
 
-        checkLogFile(INFO_TAG, buildingTest);
+        assertTrue("Log tag '" + TAG + "' not found in log file", readFileLastLine().contains(TAG));
+        assertEquals("Info tag '" + INFO_TAG + "' not found in log file", INFO_TAG, getLogLevelTag());
+        assertTrue("Date and time not found in log file", getTimestamp().matches(DATE_TIME_REGEX));
+        assertEquals("Object logged '" + buildingTest + "' not found in log file", buildingTest.toString(), getMessage());
     }
 
     @Test
     public void warning() {
         String WARNING_TAG = "W";
-
         BuildingTest buildingTest = new BuildingTest();
         buildingTest.setId(12);
         buildingTest.setName("nameTestWarning");
         buildingTest.setAddress("addressTestWarning");
+
         FileLogger.w(TAG, buildingTest.toString());
 
-        checkLogFile(WARNING_TAG, buildingTest);
+        assertTrue("Log tag '" + TAG + "' not found in log file", readFileLastLine().contains(TAG));
+        assertEquals("Warning tag '" + WARNING_TAG + "' not found in log file", WARNING_TAG, getLogLevelTag());
+        assertTrue("Date and time not found in log file", getTimestamp().matches(DATE_TIME_REGEX));
+        assertEquals("Object logged '" + buildingTest + "' not found in log file", buildingTest.toString(), getMessage());
     }
 
     @Test
@@ -104,30 +114,33 @@ public class FileLoggerTest {
         buildingTest.setId(99);
         buildingTest.setName("nameTestError");
         buildingTest.setAddress("addressTestError");
+
         FileLogger.e(TAG, buildingTest.toString());
 
-        checkLogFile(ERROR_TAG, buildingTest);
+        assertTrue("Log tag '" + TAG + "' not found in log file", readFileLastLine().contains(TAG));
+        assertEquals("Error tag '" + ERROR_TAG + "' not found in log file", ERROR_TAG, getLogLevelTag());
+        assertTrue("Date and time not found in log file", getTimestamp().matches(DATE_TIME_REGEX));
+        assertEquals("Object logged '" + buildingTest + "' not found in log file", buildingTest.toString(), getMessage());
     }
 
-    private static void checkLogFile(String logLevelTag, BuildingTest buildingTest) {
+    private static String getLogLevelTag() {
         String lineLogged = readFileLastLine();
-
         int indexOfTag = lineLogged.indexOf(TAG);
         int logLevelIndex = indexOfTag - 2;
+        return lineLogged.substring(logLevelIndex, logLevelIndex + 1);
+    }
 
-        assertTrue("Verbose tag '" + logLevelTag + "' not found in log file",
-                lineLogged.substring(logLevelIndex, indexOfTag - 1).equals(logLevelTag));
-        assertTrue("Log tag '" + TAG + "' not found in log file", lineLogged.contains(TAG));
+    private static String getTimestamp() {
+        String lineLogged = readFileLastLine();
+        int indexOfTag = lineLogged.indexOf(TAG);
+        int logLevelIndex = indexOfTag - 2;
+        return lineLogged.substring(0, logLevelIndex).trim();
+    }
 
-        String dateTimeString = lineLogged.substring(0, logLevelIndex);
-        DateFormat formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
-        try {
-            formatter.parse(dateTimeString);
-        } catch (ParseException e) {
-            fail("Date and time not found in log file");
-        }
-
-        assertTrue("Object logged '" + buildingTest + "' not found in log file", lineLogged.contains(buildingTest.toString()));
+    private static String getMessage() {
+        String lineLogged = readFileLastLine();
+        int indexOfMessage = lineLogged.indexOf(TAG) + TAG.length() + 2;
+        return lineLogged.substring(indexOfMessage).trim();
     }
 
     private static String readFileLastLine() {

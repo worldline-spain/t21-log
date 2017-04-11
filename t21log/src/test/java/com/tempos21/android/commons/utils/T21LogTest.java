@@ -101,9 +101,7 @@ public class T21LogTest {
 
     @Test
     public void disabledLog() {
-
         T21Log.initialize(TAG, false);
-
         int i = -1;
         BuildingTest buildingTest = new BuildingTest();
         buildingTest.setId(44);
@@ -118,11 +116,8 @@ public class T21LogTest {
 
     @Test
     public void writeToFile() {
-
         File file = new File("T21LogTest_writeToFile.log");
-
         T21Log.initialize(TAG, true, file);
-
         int i = 34;
         BuildingTest buildingTest = new BuildingTest();
         buildingTest.setId(28);
@@ -140,9 +135,7 @@ public class T21LogTest {
     @Test
     public void disabledLogWithFile() {
         File file = new File("T21LogTest_disabledLogWithFile.log");
-
         T21Log.initialize(TAG, false, file);
-
         int i = 87;
         BuildingTest buildingTest = new BuildingTest();
         buildingTest.setId(3698);
