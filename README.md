@@ -40,6 +40,13 @@ In your application class or your launcher activity (or main/base activity) you 
 * `T21Log.initialize(String, String);`
 	* First is the tag of your application. This tag will be in the whole app.
 	* Second is to set enabled or disabled the log. If you don't call this method then nothing will be printed. Is a good practice call like this `T21Log.initialize("AppName", BuildConfig.DEBUG);`, in order to avoid print log messages in release versions.
+
+Or this one, if you want that log gets written to a file too:
+
+* `T21Log.initialize(String, String, File);`
+	* First is the tag of your application. This tag will be in the whole app.
+	* Second is to set enabled or disabled the log. If you don't call this method then nothing will be printed. Is a good practice call like this `T21Log.initialize("AppName", BuildConfig.DEBUG, file);`, in order to avoid print log messages in release versions.
+	* Third is the file where you want the log to be written.
     
 ### Printing logs
 
