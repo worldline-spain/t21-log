@@ -22,6 +22,8 @@ class FileLogger {
 
     private static final String DATE_TIME_FORMAT = "yyyy/MM/dd HH:mm:ss.SSS";
 
+    private static final String LINE_SEPARATOR_PROPERTY = "line.separator";
+
     private static File file;
 
     /**
@@ -40,8 +42,6 @@ class FileLogger {
                 FileOutputStream fileOutStream = new FileOutputStream(file, true);
                 OutputStreamWriter outStreamWriter = new OutputStreamWriter(fileOutStream);
 
-                //Example of line in file:
-                //2017/04/02 19:44:55 V/FileLoggerTag: message logged
                 StringBuilder sb = new StringBuilder();
                 Calendar now = Calendar.getInstance();
                 DateFormat formatter = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
@@ -53,7 +53,7 @@ class FileLogger {
                 sb.append(COLON);
                 sb.append(BLANK);
                 sb.append(message);
-                sb.append(System.getProperty("line.separator"));
+                sb.append(System.getProperty(LINE_SEPARATOR_PROPERTY));
 
                 outStreamWriter.append(sb.toString());
 

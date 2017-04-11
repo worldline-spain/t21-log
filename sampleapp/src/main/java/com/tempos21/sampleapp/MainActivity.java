@@ -16,8 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "[MainActivity]";
 
-    private Button sendByMailButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,19 +23,17 @@ public class MainActivity extends AppCompatActivity {
 
         T21Log.d(TAG, "onCreate", "adding messages", 3, true, "separated by commas");
 
-        sendByMailButton = (Button) findViewById(R.id.sendByMailButton);
+        Button sendByMailButton = (Button) findViewById(R.id.sendByMailButton);
         sendByMailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 File logFile = ((SampleApplication) getApplication()).getLogFile();
-                Uri logFileUri = FileProvider.getUriForFile(MainActivity.this, "com.worldline.fileprovider", logFile);
+                Uri logFileUri = FileProvider
+                        .getUriForFile(MainActivity.this, getString(R.string.file_provider_authority), logFile);
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                // set the type to 'email'
-                emailIntent.setType("message/rfc822");
-                // attach the file
+                emailIntent.setType(getString(R.string.mail_mime_type));
                 emailIntent.putExtra(Intent.EXTRA_STREAM, logFileUri);
                 emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                // the mail subject
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_subject));
 
                 startActivity(Intent.createChooser(emailIntent, getString(R.string.mail_chooser_title)));
