@@ -31,7 +31,7 @@ class FileLogger {
      *
      * @param file: File where you want the log to be written
      */
-    public static void initialize(File file) {
+    static void initialize(File file) {
         FileLogger.file = file;
     }
 
@@ -67,23 +67,23 @@ class FileLogger {
         }
     }
 
-    public static void v(String logTag, String message) {
+    static void v(String logTag, String message) {
         writeToFile(LogLevel.V, logTag, message);
     }
 
-    public static void d(String logTag, String message) {
+    static void d(String logTag, String message) {
         writeToFile(LogLevel.D, logTag, message);
     }
 
-    public static void i(String logTag, String message) {
+    static void i(String logTag, String message) {
         writeToFile(LogLevel.I, logTag, message);
     }
 
-    public static void w(String logTag, String message) {
+    static void w(String logTag, String message) {
         writeToFile(LogLevel.W, logTag, message);
     }
 
-    public static void e(String logTag, String message) {
+    static void e(String logTag, String message) {
         writeToFile(LogLevel.E, logTag, message);
     }
 
