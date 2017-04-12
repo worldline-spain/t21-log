@@ -9,8 +9,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import android.util.Log;
 
-import java.io.File;
-
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
@@ -112,42 +110,6 @@ public class T21LogTest {
 
         verifyStatic(never());
         Log.v(eq(TAG), anyString());
-    }
-
-    @Test
-    public void writeToFile() {
-        File file = new File("T21LogTest_writeToFile.log");
-        T21Log.initialize(TAG, true, file);
-        int i = 34;
-        BuildingTest buildingTest = new BuildingTest();
-        buildingTest.setId(28);
-        buildingTest.setName("nameTestFile");
-        buildingTest.setAddress("addressTestFile");
-
-        T21Log.i("hola: ", i, " :: ", buildingTest);
-
-        verifyStatic(times(1));
-        FileLogger.i(eq(TAG), anyString());
-
-        file.delete();
-    }
-
-    @Test
-    public void disabledLogWithFile() {
-        File file = new File("T21LogTest_disabledLogWithFile.log");
-        T21Log.initialize(TAG, false, file);
-        int i = 87;
-        BuildingTest buildingTest = new BuildingTest();
-        buildingTest.setId(3698);
-        buildingTest.setName("nameTestDisabledWithFile");
-        buildingTest.setAddress("addressTestDisabledWithFile");
-
-        T21Log.v("hola: ", i, " :: ", buildingTest);
-
-        verifyStatic(never());
-        FileLogger.v(eq(TAG), anyString());
-
-        file.delete();
     }
 
     class BuildingTest {
