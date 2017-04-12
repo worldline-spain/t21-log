@@ -5,6 +5,7 @@
 
 Commons classes added to this library:
 * T21Log
+* T21FileLog
 
 ## Why
 - Enable or disable the logcat depending on the BuildConfig.
@@ -41,22 +42,30 @@ In your application class or your launcher activity (or main/base activity) you 
 	* First is the tag of your application. This tag will be in the whole app.
 	* Second is to set enabled or disabled the log. If you don't call this method then nothing will be printed. Is a good practice call like this `T21Log.initialize("AppName", BuildConfig.DEBUG);`, in order to avoid print log messages in release versions.
 
-Or this one, if you want that log gets written to a file too:
+If you want the log to be written to a file, not to Android Monitor, you should use T21FileLog class:
 
-* `T21Log.initialize(String, String, File);`
+* `T21FileLog.initialize(String, String, File);`
 	* First is the tag of your application. This tag will be in the whole app.
 	* Second is to set enabled or disabled the log. If you don't call this method then nothing will be printed. Is a good practice call like this `T21Log.initialize("AppName", BuildConfig.DEBUG, file);`, in order to avoid print log messages in release versions.
 	* Third is the file where you want the log to be written.
     
 ### Printing logs
 
-Some examples If you set your tag "[SAMPLE_APP]":
+Some examples if you set your tag "[SAMPLE_APP]":
 
 * `T21Log.d("Hello")`; --> 'D/[SAMPLE_APP]: Hello'
 
 * `T21Log.d(CLASS_TAG, "Hello")`; --> 'D/[SAMPLE_APP]: [MainActivity] Hello' (if CLASS_TAG == '[MainActivity]')
 
 * `T21Log.d(CLASS_TAG, "onCreate", "adding messages", 3, true, "separated by commas");` --> 'D/[SAMPLE_APP]: [MainActivity] onCreate adding messages 3 true separated by commas' (if CLASS_TAG == '[MainActivity]')
+
+The same can be done with T21FileLog (supposing you have set your tag "[SAMPLE_APP]"), but it will be written to a file:
+
+* `T21FileLog.d("Hello")`; --> 'D/[SAMPLE_APP]: Hello'
+
+* `T21FileLog.d(CLASS_TAG, "Hello")`; --> 'D/[SAMPLE_APP]: [MainActivity] Hello' (if CLASS_TAG == '[MainActivity]')
+
+* `T21FileLog.d(CLASS_TAG, "onCreate", "adding messages", 3, true, "separated by commas");` --> 'D/[SAMPLE_APP]: [MainActivity] onCreate adding messages 3 true separated by commas' (if CLASS_TAG == '[MainActivity]')
 
 ## Contributing to the project
 
