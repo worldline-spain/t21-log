@@ -68,31 +68,31 @@ public class T21FileLog extends Logger {
         }
     }
 
-    static void v(Object... verbose) {
+    public static void v(Object... verbose) {
         if (getLogEnabled()) {
             writeToFile(LogLevel.V, getLogTag(), getLog(verbose));
         }
     }
 
-    static void d(Object... debug) {
+    public static void d(Object... debug) {
         if (getLogEnabled()) {
             writeToFile(LogLevel.D, getLogTag(), getLog(debug));
         }
     }
 
-    static void i(Object... info) {
+    public static void i(Object... info) {
         if (getLogEnabled()) {
             writeToFile(LogLevel.I, getLogTag(), getLog(info));
         }
     }
 
-    static void w(Object... warning) {
+    public static void w(Object... warning) {
         if (getLogEnabled()) {
             writeToFile(LogLevel.W, getLogTag(), getLog(warning));
         }
     }
 
-    static void e(Object... error) {
+    public static void e(Object... error) {
         if (getLogEnabled()) {
             writeToFile(LogLevel.E, getLogTag(), getLog(error));
         }
