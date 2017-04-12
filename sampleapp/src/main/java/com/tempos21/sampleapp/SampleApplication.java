@@ -1,5 +1,6 @@
 package com.tempos21.sampleapp;
 
+import com.tempos21.android.commons.utils.T21FileLog;
 import com.tempos21.android.commons.utils.T21Log;
 
 import android.app.Application;
@@ -22,7 +23,8 @@ public class SampleApplication extends Application {
         File logsPath = new File(getFilesDir(), LOG_PATH);
         logsPath.mkdir();
         logFile = new File(logsPath, LOG_FILE_NAME);
-        T21Log.initialize(LOG_TAG, BuildConfig.DEBUG, logFile);
+        T21Log.initialize(LOG_TAG, BuildConfig.DEBUG);
+        T21FileLog.initialize(LOG_TAG, BuildConfig.DEBUG, logFile);
     }
 
     public File getLogFile() {
