@@ -41,12 +41,12 @@ public class T21FileLogTest {
     @BeforeClass
     public static void setUpOnce() {
         logFile = new File("T21FileLogTest.log");
-        T21FileLog.initialize(TAG, true, logFile);
     }
 
     @Before
     public void setUp() {
         PowerMockito.mockStatic(Log.class);
+        T21FileLog.initialize(TAG, true, logFile);
     }
 
     @Test
