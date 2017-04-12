@@ -4,12 +4,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,15 +11,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Log.class})
 public class T21FileLogTest {
 
     private static final String TAG = "[T21FileLogTest]";
@@ -45,7 +33,6 @@ public class T21FileLogTest {
 
     @Before
     public void setUp() {
-        PowerMockito.mockStatic(Log.class);
         T21FileLog.initialize(TAG, true, logFile);
     }
 
@@ -140,24 +127,6 @@ public class T21FileLogTest {
     }
 
     @Test
-    public void writeToFile() {
-        File file = new File("T21LogTest_writeToFile.log");
-        T21FileLog.initialize(TAG, true, file);
-        int i = 34;
-        BuildingTest buildingTest = new BuildingTest();
-        buildingTest.setId(28);
-        buildingTest.setName("nameTestFile");
-        buildingTest.setAddress("addressTestFile");
-
-        T21Log.i(HOLA, i, DOUBLE_COLON, buildingTest);
-
-        verifyStatic(times(1));
-        T21FileLog.i(eq(TAG), anyString());
-
-        file.delete();
-    }
-
-    @Test
     public void disabledLogWithFile() {
         File file = new File("T21LogTest_disabledLogWithFile.log");
         T21FileLog.initialize(TAG, false, file);
@@ -169,10 +138,7 @@ public class T21FileLogTest {
 
         T21FileLog.v(HOLA, i, DOUBLE_COLON, buildingTest);
 
-        verifyStatic(never());
-        T21FileLog.v(eq(TAG), anyString());
-
-        file.delete();
+        assertFalse(file.exists());
     }
 
     private static String getLogLevelTag() {
