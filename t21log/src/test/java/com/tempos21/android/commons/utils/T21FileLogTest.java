@@ -18,17 +18,69 @@ public class T21FileLogTest {
 
     private static final String TAG = "[T21FileLogTest]";
 
-    private static File logFile;
-
     private static final String DATE_TIME_REGEX = "\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}";
 
     private static final String HOLA = "hola";
 
     private static final String DOUBLE_COLON = "::";
 
+    private static File logFile;
+
     @BeforeClass
     public static void setUpOnce() {
         logFile = new File("T21FileLogTest.log");
+    }
+
+    private static String getLogLevelTag() {
+        String lineLogged = readFileLastLine();
+        int indexOfTag = lineLogged.indexOf(TAG);
+        int logLevelIndex = indexOfTag - 2;
+        return lineLogged.substring(logLevelIndex, logLevelIndex + 1);
+    }
+
+    private static String getTimestamp() {
+        String lineLogged = readFileLastLine();
+        int indexOfTag = lineLogged.indexOf(TAG);
+        int logLevelIndex = indexOfTag - 2;
+        return lineLogged.substring(0, logLevelIndex).trim();
+    }
+
+    private static String getMessage() {
+        String lineLogged = readFileLastLine();
+        int indexOfMessage = lineLogged.indexOf(TAG) + TAG.length() + 2;
+        return lineLogged.substring(indexOfMessage).trim();
+    }
+
+    private static String readFileLastLine() {
+        String line = "";
+        BufferedReader bufferedReader = null;
+        FileReader fileReader = null;
+
+        try {
+            String currentLine;
+
+            bufferedReader = new BufferedReader(new FileReader(logFile));
+
+            while ((currentLine = bufferedReader.readLine()) != null) {
+                line = currentLine;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return line;
+    }
+
+    @AfterClass
+    public static void tearDownOnce() {
+        logFile.delete();
     }
 
     @Before
@@ -139,58 +191,6 @@ public class T21FileLogTest {
         T21FileLog.v(HOLA, i, DOUBLE_COLON, buildingTest);
 
         assertFalse(file.exists());
-    }
-
-    private static String getLogLevelTag() {
-        String lineLogged = readFileLastLine();
-        int indexOfTag = lineLogged.indexOf(TAG);
-        int logLevelIndex = indexOfTag - 2;
-        return lineLogged.substring(logLevelIndex, logLevelIndex + 1);
-    }
-
-    private static String getTimestamp() {
-        String lineLogged = readFileLastLine();
-        int indexOfTag = lineLogged.indexOf(TAG);
-        int logLevelIndex = indexOfTag - 2;
-        return lineLogged.substring(0, logLevelIndex).trim();
-    }
-
-    private static String getMessage() {
-        String lineLogged = readFileLastLine();
-        int indexOfMessage = lineLogged.indexOf(TAG) + TAG.length() + 2;
-        return lineLogged.substring(indexOfMessage).trim();
-    }
-
-    private static String readFileLastLine() {
-        String line = "";
-        BufferedReader bufferedReader = null;
-        FileReader fileReader = null;
-
-        try {
-            String currentLine;
-
-            bufferedReader = new BufferedReader(new FileReader(logFile));
-
-            while ((currentLine = bufferedReader.readLine()) != null) {
-                line = currentLine;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bufferedReader != null) {
-                    bufferedReader.close();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return line;
-    }
-
-    @AfterClass
-    public static void tearDownOnce() {
-        logFile.delete();
     }
 
     class BuildingTest {
