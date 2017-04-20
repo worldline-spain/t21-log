@@ -1,48 +1,55 @@
 package com.tempos21.android.commons.utils;
 
-/**
- * Custom Log class
- */
-public class T21Log extends Logger {
+import android.content.Context;
+
+import java.io.File;
+
+public class T21Log {
 
     /**
-     * Initialize the Log
+     * Initialize the FileLogger to write to a file.
      *
-     * @param tag:     Your appName or something You want to appear in log;
-     * @param enabled: If you want to enable or disable the log
+     * @param tag:           Your appName or something you want to appear in log
+     * @param enableConsole: If you want to enable or disable the Android console log
+     * @param enableFile:    If you want to enable or disable the file log
+     * @param context:       Your app context
      */
-    public static void initialize(String tag, boolean enabled) {
-        Logger.initialize(tag, enabled);
+    public static void initialize(String tag, boolean enableConsole, boolean enableFile, Context context) {
+        AndroidConsoleLogger.initialize(tag, enableConsole);
+        FileLogger.initialize(tag, enableFile, context);
     }
 
     public static void v(Object... verbose) {
-        if (getLogEnabled()) {
-            android.util.Log.v(getLogTag(), getLog(verbose));
-        }
+        AndroidConsoleLogger.v(verbose);
+        FileLogger.v(verbose);
     }
 
     public static void d(Object... debug) {
-        if (getLogEnabled()) {
-            android.util.Log.d(getLogTag(), getLog(debug));
-        }
+        AndroidConsoleLogger.d(debug);
+        FileLogger.d(debug);
     }
 
-
     public static void i(Object... info) {
-        if (getLogEnabled()) {
-            android.util.Log.i(getLogTag(), getLog(info));
-        }
+        AndroidConsoleLogger.i(info);
+        FileLogger.i(info);
     }
 
     public static void w(Object... warning) {
-        if (getLogEnabled()) {
-            android.util.Log.w(getLogTag(), getLog(warning));
-        }
+        AndroidConsoleLogger.w(warning);
+        FileLogger.w(warning);
     }
 
     public static void e(Object... error) {
-        if (getLogEnabled()) {
-            android.util.Log.e(getLogTag(), getLog(error));
-        }
+        AndroidConsoleLogger.e(error);
+        FileLogger.e(error);
+    }
+
+    /**
+     * Returns the file where the log is written.
+     *
+     * @return If file log has been enabled, returns the file where the log is written. Otherwise, returns null.
+     */
+    public static File getLogFile() {
+        return FileLogger.getLogFile();
     }
 }

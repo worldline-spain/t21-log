@@ -7,19 +7,15 @@ abstract class Logger {
 
     private static final String BLANK = " ";
 
-    private static boolean LOG_ENABLED = BuildConfig.LOG_ENABLED;
-
     private static String logTag = null;
 
     /**
      * Initialize the Log
      *
-     * @param tag:     Your appName or something You want to appear in log;
-     * @param enabled: If you want to enable or disable the log
+     * @param tag: Your appName or something You want to appear in log;
      */
-    static void initialize(String tag, boolean enabled) {
+    static void initialize(String tag) {
         Logger.logTag = tag;
-        Logger.LOG_ENABLED = enabled;
     }
 
     private static String getString(Object object) {
@@ -39,7 +35,7 @@ abstract class Logger {
 
     static String getLogTag() {
         if (logTag == null) {
-            return (T21Log.class.getPackage().getName());
+            return (Logger.class.getCanonicalName());
         }
         return logTag;
     }
@@ -55,10 +51,6 @@ abstract class Logger {
             space = true;
         }
         return sb.toString();
-    }
-
-    static boolean getLogEnabled() {
-        return LOG_ENABLED;
     }
 
     static String getBlank() {

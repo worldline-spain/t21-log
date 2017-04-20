@@ -1,6 +1,5 @@
 package com.tempos21.sampleapp;
 
-import com.tempos21.android.commons.utils.T21FileLog;
 import com.tempos21.android.commons.utils.T21Log;
 
 import android.content.Intent;
@@ -22,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        T21FileLog.d(TAG, "onCreate", "adding messages", 3, true, "separated by commas");
+        T21Log.d(TAG, "onCreate", "adding messages", 3, true, "separated by commas");
 
         Button sendByMailButton = (Button) findViewById(R.id.sendByMailButton);
         sendByMailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File logFile = ((SampleApplication) getApplication()).getLogFile();
+                File logFile = T21Log.getLogFile();
                 Uri logFileUri = FileProvider
                         .getUriForFile(MainActivity.this, getString(R.string.file_provider_authority), logFile);
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -40,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(emailIntent, getString(R.string.mail_chooser_title)));
             }
         });
-
-        T21Log.d(TAG, "onCreate", "adding messages", 3, true, "separated by commas");
 
     }
 }

@@ -1,5 +1,7 @@
 package com.tempos21.android.commons.utils;
 
+import android.content.Context;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,7 +14,9 @@ import java.util.Locale;
 /**
  * Class that writes log messages to a logFile.
  */
-public class T21FileLog extends Logger {
+class FileLogger extends Logger {
+
+    private static final String T21_LOG_TAG = "T21Log";
 
     private static final String SLASH = "/";
 
@@ -22,24 +26,50 @@ public class T21FileLog extends Logger {
 
     private static final String LINE_SEPARATOR_PROPERTY = "line.separator";
 
+    private static final String LOG_PATH = "logs";
+
+    private static final String LOG_FILE_NAME = "T21Log.log";
+
     private static File logFile;
 
+    private static boolean ENABLED = false;
+
     /**
-     * Initialize the Log to write both to Android logger and logFile
+     * Initialize the FileLogger to write to a file.
      *
-     * @param tag:     Your appName or something You want to appear in log;
+     * @param tag:     Your appName or something you want to appear in log
      * @param enabled: If you want to enable or disable the log
-     * @param logFile: File where log will be written to
+     * @param context: Android app context
      */
-    public static void initialize(String tag, boolean enabled, File logFile) {
-        Logger.initialize(tag, enabled);
-        T21FileLog.logFile = logFile;
+    static void initialize(String tag, boolean enabled, Context context) {
+        Logger.initialize(tag);
+        ENABLED = enabled;
+        File logsPath = new File(context.getFilesDir(), LOG_PATH);
+        if (logsPath.exists() || (!logsPath.exists() && logsPath.mkdir())) {
+            logFile = new File(logsPath, LOG_FILE_NAME);
+
+            try {
+                if (!logFile.exists()) {
+                    logFile.createNewFile();
+                }
+            } catch (IOException e) {
+                ENABLED = false;
+                android.util.Log
+                        .e(T21_LOG_TAG, "Unable to create log file '" + logFile.getName() + "'. Logging to file disabled.\n" + e);
+            }
+        } else {
+            ENABLED = false;
+            android.util.Log.e(T21_LOG_TAG, "Unable to create 'logs' directory. Logging to file disabled");
+        }
+    }
+
+    static File getLogFile() {
+        return logFile;
     }
 
     private static void writeToFile(LogLevel logLevel, String logTag, String message) {
         if (logFile != null) {
             try {
-                logFile.createNewFile();
                 FileOutputStream fileOutStream = new FileOutputStream(logFile, true);
                 OutputStreamWriter outStreamWriter = new OutputStreamWriter(fileOutStream);
 
@@ -63,37 +93,37 @@ public class T21FileLog extends Logger {
                 fileOutStream.flush();
                 fileOutStream.close();
             } catch (IOException e) {
-                android.util.Log.e("Exception", "File write failed: " + e.toString());
+                android.util.Log.e(T21_LOG_TAG, "File write failed: " + e.toString());
             }
         }
     }
 
-    public static void v(Object... verbose) {
-        if (getLogEnabled()) {
+    static void v(Object... verbose) {
+        if (ENABLED) {
             writeToFile(LogLevel.V, getLogTag(), getLog(verbose));
         }
     }
 
-    public static void d(Object... debug) {
-        if (getLogEnabled()) {
+    static void d(Object... debug) {
+        if (ENABLED) {
             writeToFile(LogLevel.D, getLogTag(), getLog(debug));
         }
     }
 
-    public static void i(Object... info) {
-        if (getLogEnabled()) {
+    static void i(Object... info) {
+        if (ENABLED) {
             writeToFile(LogLevel.I, getLogTag(), getLog(info));
         }
     }
 
-    public static void w(Object... warning) {
-        if (getLogEnabled()) {
+    static void w(Object... warning) {
+        if (ENABLED) {
             writeToFile(LogLevel.W, getLogTag(), getLog(warning));
         }
     }
 
-    public static void e(Object... error) {
-        if (getLogEnabled()) {
+    static void e(Object... error) {
+        if (ENABLED) {
             writeToFile(LogLevel.E, getLogTag(), getLog(error));
         }
     }

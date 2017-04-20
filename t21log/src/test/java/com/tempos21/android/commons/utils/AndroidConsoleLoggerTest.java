@@ -17,14 +17,14 @@ import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Log.class})
-public class T21LogTest {
+public class AndroidConsoleLoggerTest {
 
-    private static String TAG = "[T21LogTest]";
+    private static String TAG = "[AndroidConsoleLoggerTest]";
 
     @Before
     public void setUp() {
         PowerMockito.mockStatic(Log.class);
-        T21Log.initialize(TAG, true);
+        AndroidConsoleLogger.initialize(TAG, true);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class T21LogTest {
         buildingTest.setName("nameTest");
         buildingTest.setAddress("addressTest");
 
-        T21Log.v("hola: ", i, " :: ", buildingTest);
+        AndroidConsoleLogger.v("hola: ", i, " :: ", buildingTest);
 
         verifyStatic(times(1));
         Log.v(eq(TAG), anyString());
@@ -49,7 +49,7 @@ public class T21LogTest {
         buildingTest.setName("nameTest");
         buildingTest.setAddress("addressTest");
 
-        T21Log.d("hola: ", i, " :: ", buildingTest);
+        AndroidConsoleLogger.d("hola: ", i, " :: ", buildingTest);
 
         verifyStatic(times(1));
         Log.d(eq(TAG), anyString());
@@ -63,7 +63,7 @@ public class T21LogTest {
         buildingTest.setName("nameTestInfo");
         buildingTest.setAddress("addressTestInfo");
 
-        T21Log.i("hola: ", i, " :: ", buildingTest);
+        AndroidConsoleLogger.i("hola: ", i, " :: ", buildingTest);
 
         verifyStatic(times(1));
         Log.i(eq(TAG), anyString());
@@ -77,7 +77,7 @@ public class T21LogTest {
         buildingTest.setName("nameTestWarning");
         buildingTest.setAddress("addressTestWarning");
 
-        T21Log.w("hola: ", i, " :: ", buildingTest);
+        AndroidConsoleLogger.w("hola: ", i, " :: ", buildingTest);
 
         verifyStatic(times(1));
         Log.w(eq(TAG), anyString());
@@ -91,7 +91,7 @@ public class T21LogTest {
         buildingTest.setName("nameTestError");
         buildingTest.setAddress("addressTestError");
 
-        T21Log.e("hola: ", i, " :: ", buildingTest);
+        AndroidConsoleLogger.e("hola: ", i, " :: ", buildingTest);
 
         verifyStatic(times(1));
         Log.e(eq(TAG), anyString());
@@ -99,14 +99,14 @@ public class T21LogTest {
 
     @Test
     public void disabledLog() {
-        T21Log.initialize(TAG, false);
+        AndroidConsoleLogger.initialize(TAG, false);
         int i = -1;
         BuildingTest buildingTest = new BuildingTest();
         buildingTest.setId(44);
         buildingTest.setName("nameTestDisabled");
         buildingTest.setAddress("addressTestDisabled");
 
-        T21Log.v("hola: ", i, " :: ", buildingTest);
+        AndroidConsoleLogger.v("hola: ", i, " :: ", buildingTest);
 
         verifyStatic(never());
         Log.v(eq(TAG), anyString());
