@@ -3,12 +3,10 @@
 [![Bintray](https://img.shields.io/bintray/v/worldline-spain/maven/t21-log.svg?maxAge=2592000)](https://bintray.com/worldline-spain/maven/t21-log)
 
 
-Commons classes added to this library:
-* T21Log
-
 ## Why
 - Enable or disable the logcat depending on the BuildConfig.
 - Strings are not concatenated with the operator '+', we use `StringBuilder` class
+- Send the log cat by email (or whatever)
 
 ## How to add to your project
 - Maven
@@ -16,17 +14,17 @@ Commons classes added to this library:
 <dependency>
    <groupId>com.tempos21.android.commons.utils</groupId>
    <artifactId>t21-log</artifactId>
-   <version>1.0.8</version>
+   <version>2.0.0</version>
    <type>pom</type>
  </dependency>
 ```
 - Gradle
 ```xml
-compile 'com.tempos21.android.commons.utils:t21-log:1.0.8'
+compile 'com.tempos21.android.commons.utils:t21-log:2.0.0'
 ```
 - Ivy
 ```xml
-<dependency org='com.tempos21.android.commons.utils' name='t21-log' rev='1.0.8'>
+<dependency org='com.tempos21.android.commons.utils' name='t21-log' rev='2.0.0'>
   <artifact name='t21-log' ext='pom' ></artifact>
 </dependency>
 ```
@@ -42,7 +40,9 @@ In your application class or your launcher activity (or main/base activity) you 
 	* Second is to set enabled or disabled the log to console (Android Monitor).
 	* Third is to set enabled or disabled the log to file.
 	* Fourth is your application's context.
-	If you don't call this method then nothing will be printed. Is a good practice call like this `T21Log.initialize("AppName", BuildConfig.DEBUG, BuildConfig.DEBUG, context);`, in order to avoid print log messages in release versions.
+
+	If you don't call this method then nothing will be printed.
+	Is a good practice call like this `T21Log.initialize("AppName", BuildConfig.DEBUG, BuildConfig.DEBUG, context);`, in order to avoid print log messages in release versions.
     
 ### Printing logs
 
@@ -56,7 +56,11 @@ Some examples if you set your tag "[SAMPLE_APP]":
 
 ### Log file location
 
-If you enable log to file (set to **true** the third parameter in `initalize()` method), a new file is created to store the log. This file, which name is **T21Log.log** is located under the application files' folder, in a folder called **logs**. You can get this File calling `T21Log.getLogFile()`.
+If you enable log to file (set to **true** the third parameter in `initialize()` method), a new file is created to store the log. This file, which name is **T21Log.log** is located under the application files' folder, in a folder called **logs**. You can get this File calling `T21Log.getLogFile()`.
+
+## Sample
+
+Write a line in the log monitor and send a file with the content of the log.
 
 ## Contributing to the project
 

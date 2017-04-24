@@ -2,16 +2,16 @@
 
 ext {
     configuration = [
-            compileVersion      : 24,
-            buildToolsVersion   : "24.0.3",
+            compileVersion      : 25,
+            buildToolsVersion   : "25.0.2",
             minSdk              : 9,
-            targetSdk           : 24,
-            version_code        : 1,
-            version_name        : "1.0.8"
+            targetSdk           : 25,
+            version_code        : 2,
+            version_name        : "2.0.0"
     ]
     PUBLISH_GROUP_ID = 'com.tempos21.android.commons.utils'
     PUBLISH_ARTIFACT_ID = 't21-log'
-    PUBLISH_VERSION = '1.0.8'
+    PUBLISH_VERSION = '2.0.0'
 }
 
 buildscript {
@@ -19,7 +19,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
         classpath 'com.novoda:bintray-release:0.4.0'
 
