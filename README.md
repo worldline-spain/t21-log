@@ -37,19 +37,26 @@ compile 'com.tempos21.android.commons.utils:t21-log:1.0.8'
 
 In your application class or your launcher activity (or main/base activity) you should call this method:
 
-* `T21Log.initialize(String, String);`
+* `T21Log.initialize(String, boolean, boolean, Context);`
 	* First is the tag of your application. This tag will be in the whole app.
-	* Second is to set enabled or disabled the log. If you don't call this method then nothing will be printed. Is a good practice call like this `T21Log.initialize("AppName", BuildConfig.DEBUG);`, in order to avoid print log messages in release versions.
+	* Second is to set enabled or disabled the log to console (Android Monitor).
+	* Third is to set enabled or disabled the log to file.
+	* Fourth is your application's context.
+	If you don't call this method then nothing will be printed. Is a good practice call like this `T21Log.initialize("AppName", BuildConfig.DEBUG, BuildConfig.DEBUG, context);`, in order to avoid print log messages in release versions.
     
 ### Printing logs
 
-Some examples If you set your tag "[SAMPLE_APP]":
+Some examples if you set your tag "[SAMPLE_APP]":
 
 * `T21Log.d("Hello")`; --> 'D/[SAMPLE_APP]: Hello'
 
 * `T21Log.d(CLASS_TAG, "Hello")`; --> 'D/[SAMPLE_APP]: [MainActivity] Hello' (if CLASS_TAG == '[MainActivity]')
 
 * `T21Log.d(CLASS_TAG, "onCreate", "adding messages", 3, true, "separated by commas");` --> 'D/[SAMPLE_APP]: [MainActivity] onCreate adding messages 3 true separated by commas' (if CLASS_TAG == '[MainActivity]')
+
+### Log file location
+
+If you enable log to file (set to **true** the third parameter in `initalize()` method), a new file is created to store the log. This file, which name is **T21Log.log** is located under the application files' folder, in a folder called **logs**. You can get this File calling `T21Log.getLogFile()`.
 
 ## Contributing to the project
 
