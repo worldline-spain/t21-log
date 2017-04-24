@@ -69,9 +69,11 @@ class FileLogger extends Logger {
 
     private static void writeToFile(LogLevel logLevel, String logTag, String message) {
         if (logFile != null) {
+            FileOutputStream fileOutStream = null;
+            OutputStreamWriter outStreamWriter = null;
             try {
-                FileOutputStream fileOutStream = new FileOutputStream(logFile, true);
-                OutputStreamWriter outStreamWriter = new OutputStreamWriter(fileOutStream);
+                fileOutStream = new FileOutputStream(logFile, true);
+                outStreamWriter = new OutputStreamWriter(fileOutStream);
 
                 StringBuilder sb = new StringBuilder();
                 Calendar now = Calendar.getInstance();
@@ -87,13 +89,20 @@ class FileLogger extends Logger {
                 sb.append(System.getProperty(LINE_SEPARATOR_PROPERTY));
 
                 outStreamWriter.append(sb.toString());
-
-                outStreamWriter.close();
-
                 fileOutStream.flush();
-                fileOutStream.close();
             } catch (IOException e) {
                 android.util.Log.e(T21_LOG_TAG, "File write failed: " + e.toString());
+            } finally {
+                try {
+                    if (outStreamWriter != null) {
+                        outStreamWriter.close();
+                    }
+                    if (fileOutStream != null) {
+                        fileOutStream.close();
+                    }
+                } catch (IOException e) {
+                    //Ignore, IOExceptions should have already been handled.
+                }
             }
         }
     }
