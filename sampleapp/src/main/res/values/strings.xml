@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SampleApp</string>
+    <string name="file_provider_authority">com.worldline.fileprovider</string>
+    <string name="share_log_by_mail">Share log file by email</string>
+    <string name="mail_subject">Log File</string>
+    <string name="mail_chooser_title">Send email...</string>
+    <string name="mail_mime_type">message/rfc822</string>
 </resources>

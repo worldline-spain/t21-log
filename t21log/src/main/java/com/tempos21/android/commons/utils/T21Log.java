@@ -1,89 +1,55 @@
 package com.tempos21.android.commons.utils;
 
-/**
- * Custom Log class
- */
+import android.content.Context;
+
+import java.io.File;
+
 public class T21Log {
 
-    private static final String BLANK = " ";
-
-    private static boolean LOG_ENABLED = BuildConfig.LOG_ENABLED;
-
-    private static String logTag = null;
-
-    public static String getLogTag() {
-        if (logTag == null) {
-            return (T21Log.class.getPackage().getName());
-        }
-        return logTag;
-    }
-
     /**
-     * Initialize the Log
-     * @param tag:     Your appName or something You want to appear in log;
-     * @param enabled: If you want to enable or disable the log
+     * Initialize the FileLogger to write to a file.
+     *
+     * @param tag:           Your appName or something you want to appear in log
+     * @param enableConsole: If you want to enable or disable the Android console log
+     * @param enableFile:    If you want to enable or disable the file log
+     * @param context:       Your app context
      */
-    public static void initialize(String tag, boolean enabled) {
-        T21Log.logTag = tag;
-        T21Log.LOG_ENABLED = enabled;
-    }
-
-    private static String getString(Object object) {
-        String string = null;
-        try {
-            string = String.valueOf(object);
-        } catch (Exception e) {
-            try {
-                string = object.toString();
-            } catch (Exception e1) {
-                android.util.Log.e(getLogTag(), e1.getMessage());
-            }
-            android.util.Log.e(getLogTag(), e.getMessage());
-        }
-        return string;
+    public static void initialize(String tag, boolean enableConsole, boolean enableFile, Context context) {
+        AndroidConsoleLogger.initialize(tag, enableConsole);
+        FileLogger.initialize(tag, enableFile, context);
     }
 
     public static void v(Object... verbose) {
-        if (LOG_ENABLED) {
-            android.util.Log.v(getLogTag(), getLog(verbose));
-        }
+        AndroidConsoleLogger.v(verbose);
+        FileLogger.v(verbose);
     }
 
     public static void d(Object... debug) {
-        if (LOG_ENABLED) {
-            android.util.Log.d(getLogTag(), getLog(debug));
-        }
+        AndroidConsoleLogger.d(debug);
+        FileLogger.d(debug);
     }
 
-
     public static void i(Object... info) {
-        if (LOG_ENABLED) {
-            android.util.Log.i(getLogTag(), getLog(info));
-        }
+        AndroidConsoleLogger.i(info);
+        FileLogger.i(info);
     }
 
     public static void w(Object... warning) {
-        if (LOG_ENABLED) {
-            android.util.Log.w(getLogTag(), getLog(warning));
-        }
+        AndroidConsoleLogger.w(warning);
+        FileLogger.w(warning);
     }
 
     public static void e(Object... error) {
-        if (LOG_ENABLED) {
-            android.util.Log.e(getLogTag(), getLog(error));
-        }
+        AndroidConsoleLogger.e(error);
+        FileLogger.e(error);
     }
 
-    private static String getLog(Object... objects) {
-        StringBuilder sb = new StringBuilder();
-        boolean space = false;
-        for (Object object : objects) {
-            if (space) {
-                sb.append(BLANK);
-            }
-            sb.append(getString(object));
-            space = true;
-        }
-        return sb.toString();
+    /**
+     * Returns the file where the log is written.
+     *
+     * @return If file log has been enabled, returns the file where the log is written. Otherwise, returns null.
+     */
+    public static File getLogFile() {
+        return FileLogger.getLogFile();
     }
 }
