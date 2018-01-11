@@ -1,6 +1,6 @@
 # T21Log
 
-[![Bintray](https://api.bintray.com/packages/worldline-spain/maven/t21-log/images/download.svg)](https://bintray.com/worldline-spain/maven/t21-log)
+[![Bintray](https://api.bintray.com/packages/worldline-spain/maven/t21-log/images/download.svg)](https://bintray.com/worldline-spain/maven/t21-log/_latestVersion)
 
 
 ## Why
