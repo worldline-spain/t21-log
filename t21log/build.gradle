@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release' // must be applied after your artifact generating plugin (eg. java / com.android.library)
 
-version = "2.0.0"
+version = "2.0.1"
 def siteUrl = 'https://github.com/worldline-spain/t21-log'      // Homepage URL of the library
 def gitUrl = 'https://github.com/worldline-spain/t21-log.git'   // Git repository URL
 group = "com.tempos21.android.commons.utils"
@@ -41,7 +41,7 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 publish {
-    userOrg = properties.getProperty("bintray.userOrg")
+    userOrg = "worldline-spain"
     groupId = ext.PUBLISH_GROUP_ID
     artifactId = ext.PUBLISH_ARTIFACT_ID
     publishVersion = ext.PUBLISH_VERSION
@@ -54,7 +54,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
     testCompile 'org.powermock:powermock:1.6.5'
     testCompile 'org.powermock:powermock-module-junit4:1.6.5'

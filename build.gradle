@@ -6,12 +6,12 @@ ext {
             buildToolsVersion   : "25.0.2",
             minSdk              : 9,
             targetSdk           : 25,
-            version_code        : 2,
-            version_name        : "2.0.0"
+            version_code        : 3,
+            version_name        : "2.0.1"
     ]
     PUBLISH_GROUP_ID = 'com.tempos21.android.commons.utils'
     PUBLISH_ARTIFACT_ID = 't21-log'
-    PUBLISH_VERSION = '2.0.0'
+    PUBLISH_VERSION = '2.0.1'
 }
 
 buildscript {
