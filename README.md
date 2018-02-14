@@ -14,17 +14,17 @@
 <dependency>
    <groupId>com.tempos21.android.commons.utils</groupId>
    <artifactId>t21-log</artifactId>
-   <version>2.0.0</version>
+   <version>2.0.1</version>
    <type>pom</type>
  </dependency>
 ```
 - Gradle
 ```xml
-compile 'com.tempos21.android.commons.utils:t21-log:2.0.0'
+compile 'com.tempos21.android.commons.utils:t21-log:2.0.1'
 ```
 - Ivy
 ```xml
-<dependency org='com.tempos21.android.commons.utils' name='t21-log' rev='2.0.0'>
+<dependency org='com.tempos21.android.commons.utils' name='t21-log' rev='2.0.1'>
   <artifact name='t21-log' ext='pom' ></artifact>
 </dependency>
 ```
@@ -68,7 +68,7 @@ Feel free to report any issues or suggest new features.
 
 ## License
 
-Copyright 2016 Worldline Iberia
+Copyright 2018 Worldline Iberia
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
