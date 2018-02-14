@@ -1,5 +1,9 @@
 * CHANGELOG
 
+** v2.0.1
+
+Removed 'com.android.support:appcompat-v7:25.3.1' dependency from the library module
+
 ** v2.0.0
 
 Added 'write to log file' feature.
